@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import style from "./GoBackButton.module.css";
+import arrow from './arrowBack.png';
 
 export default class GoBackButton extends Component {
   handleGoBack = () => {
@@ -9,9 +10,11 @@ export default class GoBackButton extends Component {
   render() {
     return (
       <div className={style.buttonWrapper}>
-        <button type="button" onClick={this.handleGoBack}>
+            <img src={arrow} alt='arrow' widht='50'className={style.arrow} onClick={this.handleGoBack}/>
+          
+        {/* <button type="button" onClick={this.handleGoBack}>
           Go back
-        </button>
+        </button> */}
       </div>
     );
   }

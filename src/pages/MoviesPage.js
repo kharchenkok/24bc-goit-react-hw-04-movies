@@ -8,10 +8,12 @@ export default class MoviesPage extends Component {
     searchQuery: "",
     searchList: [],
     error: null,
+    loading:false
   };
 
      componentDidMount(){
         const {query} = getQueryParams(this.props.location.search)
+       
         // console.log(query);
 
         query&& this.fetchMovies(query)
@@ -20,19 +22,21 @@ export default class MoviesPage extends Component {
       componentDidUpdate(prevProps, prevState) {
         const { query: prevQuery } = getQueryParams(prevProps.location.search);
         const { query: nextQuery } = getQueryParams(this.props.location.search);
-    
         if (prevQuery !== nextQuery) {
+            this.setState({loading:true})
           this.fetchMovies(nextQuery);
         }
       }
 
   fetchMovies = async (query) => {
+    
     await getFetchSearchMovies(query)
       .then((data) => {
         console.log(data);
         this.setState({
           searchList: data,
           searchQuery: "",
+        loading:false
         });
       })
       .catch((error) => this.setState({ error: error }));
@@ -52,10 +56,10 @@ export default class MoviesPage extends Component {
   };
 
   render() {
-      const{searchList}=this.state
+      const{searchList,loading}=this.state
     return (
       <>
-        <SearchBar handleChange={this.handleChange} handleSubmit={this.handleSubmit} searchList={searchList} {...this.props}/>
+        <SearchBar handleChange={this.handleChange} handleSubmit={this.handleSubmit} searchList={searchList} {...this.props} loading={loading}/>
         
       </>
     );

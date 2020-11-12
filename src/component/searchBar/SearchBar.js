@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
+import LoaderSpiner from '../loaderSpiner/LoaderSpiner';
 import style from './SearchBar.module.css'
 
 export default class SearchBar extends Component {
     render() {
-        const {handleSubmit,handleChange,searchList,match,location}=this.props
+        const {handleSubmit,handleChange,searchList,match,location,loading}=this.props
         console.log(this.props);
         return (
             <>
@@ -14,7 +15,7 @@ export default class SearchBar extends Component {
           <input type="text" name="search" onChange={handleChange} />
           <button type="submit">Search</button>
         </form>
-
+{loading? <LoaderSpiner/> : 
         <ul className={style.searchList}>
           {searchList.map(item => (
             <Link
@@ -29,7 +30,7 @@ export default class SearchBar extends Component {
               <li>{item.title}</li>
             </Link>
           ))}
-        </ul>
+        </ul>}
       </>
         )
     }
