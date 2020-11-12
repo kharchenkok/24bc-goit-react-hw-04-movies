@@ -8,59 +8,62 @@ export default class MoviesPage extends Component {
     searchQuery: "",
     searchList: [],
     error: null,
-    loading:false
+    loading: false,
   };
 
-     componentDidMount(){
-        const {query} = getQueryParams(this.props.location.search)
-       
-        // console.log(query);
+  componentDidMount() {
+    const { query } = getQueryParams(this.props.location.search);
 
-        query&& this.fetchMovies(query)
-        
-      }
-      componentDidUpdate(prevProps, prevState) {
-        const { query: prevQuery } = getQueryParams(prevProps.location.search);
-        const { query: nextQuery } = getQueryParams(this.props.location.search);
-        if (prevQuery !== nextQuery) {
-            this.setState({loading:true})
-          this.fetchMovies(nextQuery);
-        }
-      }
+    // console.log(query);
+
+    query && this.fetchMovies(query);
+  }
+  componentDidUpdate(prevProps, prevState) {
+    const { query: prevQuery } = getQueryParams(prevProps.location.search);
+    const { query: nextQuery } = getQueryParams(this.props.location.search);
+    if (prevQuery !== nextQuery) {
+      this.setState({ loading: true });
+      this.fetchMovies(nextQuery);
+    }
+  }
 
   fetchMovies = async (query) => {
-    
     await getFetchSearchMovies(query)
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         this.setState({
           searchList: data,
           searchQuery: "",
-        loading:false
+          loading: false,
         });
       })
       .catch((error) => this.setState({ error: error }));
   };
 
-  handleSubmit=(e,userSearch)=>{
-    userSearch = this.state.searchQuery
-    e.preventDefault()
+  handleSubmit = (e, userSearch) => {
+    userSearch = this.state.searchQuery;
+    e.preventDefault();
     const { location, history } = this.props;
     history.push({ ...location, search: `query=${userSearch}` });
-  }
+  };
 
-  handleChange = ({target} )=> {
+  handleChange = ({ target }) => {
     this.setState({
-      searchQuery: target.value
+      searchQuery: target.value,
     });
   };
 
   render() {
-      const{searchList,loading}=this.state
+    const { searchList, loading } = this.state;
     return (
       <>
-        <SearchBar handleChange={this.handleChange} handleSubmit={this.handleSubmit} searchList={searchList} {...this.props} loading={loading}/>
-        
+        <SearchBar
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+          searchList={searchList}
+          {...this.props}
+          loading={loading}
+        />
       </>
     );
   }

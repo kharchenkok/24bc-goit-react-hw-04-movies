@@ -6,12 +6,12 @@ import style from './SearchBar.module.css'
 export default class SearchBar extends Component {
     render() {
         const {handleSubmit,handleChange,searchList,match,location,loading}=this.props
-        console.log(this.props);
+        // console.log(this.props);
         return (
             <>
-        {/* <form  className={style.searchForm}> */}
+    
         <form onSubmit={handleSubmit} className={style.searchForm}>
-          {/* <input type="text" name="search" /> */}
+   
           <input type="text" name="search" onChange={handleChange} />
           <button type="submit">Search</button>
         </form>
