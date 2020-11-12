@@ -1,4 +1,4 @@
-import React, { Component, lazy, Suspense } from "react";
+import React, { Component, Suspense } from "react";
 
 import { Route, Switch } from "react-router-dom";
 import style from "./MovieAdditional.module.css";
@@ -11,11 +11,7 @@ import {
 
 import AditionalList from "../aditionalList/AditionalList";
 
-
-const Cast = lazy(() => import("../cast/Cast" /* webpackChunkName: "Cast" */));
-const Reviews = lazy(() =>
-  import("../reviews/Reviews" /* webpackChunkName: "Reviews" */)
-);
+import { movieDetailsPageRoute } from "../../routes/routes";
 
 export default class MovieAdditional extends Component {
   state = {
@@ -24,16 +20,21 @@ export default class MovieAdditional extends Component {
     error: null,
   };
 
-  async componentDidMount() {
+  getHandleCast = () => {
     const { match } = this.props;
     const id = match.params.movieId;
-    await getFetchMovieCredits(id)
+    getFetchMovieCredits(id)
       .then((data) => this.setState({ cast: data }))
       .catch((error) => this.setState({ error: error }));
-    await getFetchMovieReviews(id)
+  };
+
+  getHandleReviews = () => {
+    const { match } = this.props;
+    const id = match.params.movieId;
+    getFetchMovieReviews(id)
       .then((data) => this.setState({ reviews: data }))
       .catch((error) => this.setState({ error: error }));
-  }
+  };
 
   render() {
     const { match } = this.props;
@@ -41,17 +42,32 @@ export default class MovieAdditional extends Component {
 
     return (
       <div className={style.additionalWrapper}>
-        <AditionalList match={match} />
+        <AditionalList
+          match={match}
+          getHandleCast={this.getHandleCast}
+          getHandleReviews={this.getHandleReviews}
+        />
         <Suspense fallback={<LoaderSpiner />}>
           <Switch>
-            <Route
-              path={`${match.url}/cast`}
-              render={(props) => <Cast {...props} castArr={cast} />}
-            />
-            <Route
-              path={`${match.url}/reviews`}
-              render={(props) => <Reviews {...props} reviewsArr={reviews} />}
-            />
+            {movieDetailsPageRoute.map(
+              ({ path, exact, component: Page, name }) => {
+                const routePath = path.slice(1);
+
+                return (
+                  <Route
+                    key={name}
+                    path={`${match.url}${path}`}
+                    exact={exact}
+                    render={(props) => (
+                      <Page
+                        infoArr={routePath === "cast" ? cast : reviews}
+                        {...props}
+                      />
+                    )}
+                  />
+                );
+              }
+            )}
           </Switch>
         </Suspense>
       </div>

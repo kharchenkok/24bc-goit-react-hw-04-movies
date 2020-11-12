@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import { Route } from "react-router-dom";
 import ErrorMassage from "../component/errorMassage/ErrorMassage";
 import GoBackButton from "../component/goBackButton/GoBackButton";
 import MovieAdditional from "../component/movieAdditional/MovieAdditional";
@@ -25,12 +24,11 @@ export default class MovieDetailsPage extends Component {
     const { match, location } = this.props;
     const id = match.params.movieId;
     // console.log(this.props.match.params.movieId);
-    if (location.state?.from) {
-        this.setState({
-          from: location.state.from.pathname,
-          search:location.state.from.search,
-        });
-      }
+    location.state?.from &&
+      this.setState({
+        from: location.state.from.pathname,
+        search: location.state.from.search,
+      });
 
     await getFetchMovieDetails(id)
       .then(
@@ -58,18 +56,20 @@ export default class MovieDetailsPage extends Component {
   }
 
   render() {
-    const { movie, error,from, search } = this.state;
+    const { movie, error, from, search } = this.state;
 
     return (
       <>
-        {error ? <ErrorMassage /> : 
-        <>
-       <GoBackButton from={from} search={search} {...this.props} />
-        <MovieDetails movie={movie} />
+        {error ? (
+          <ErrorMassage />
+        ) : (
+          <>
+            <GoBackButton from={from} search={search} {...this.props} />
+            <MovieDetails movie={movie} />
 
-        <MovieAdditional {...this.props} />
-        </>}
-      
+            <MovieAdditional {...this.props} />
+          </>
+        )}
       </>
     );
   }

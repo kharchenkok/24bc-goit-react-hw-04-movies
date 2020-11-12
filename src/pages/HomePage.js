@@ -10,38 +10,32 @@ export default class HomePage extends Component {
   state = {
     trandingList: [],
     error: null,
-    loading:false
+    loading: false,
   };
 
   async componentDidMount() {
-      this.setState({loading:true})
+    this.setState({ loading: true });
     await getFetchTrendingMovies()
       .then((data) => {
         this.setState({
           trandingList: [...data],
-          loading:false
+          loading: false,
         });
       })
-      .catch((error) => this.setState({ error: error }))
-    //   .finaly(()=>this.setState({loading:false}))
-    // console.log(this.state.trandingList);
-    // console.log(this.props);
+      .catch((error) => this.setState({ error: error }));
   }
   render() {
     const { trandingList, error, loading } = this.state;
     return (
       <>
-{loading&&<LoaderSpiner/>}
-{!error && trandingList.length>0 &&
-        <>
-          <h2>Trending today:</h2>
-          <TrendingMovies trandingList={trandingList} error={error} />
-        </>
-}
-{error&&<ErrorMassage/>}
-
-
-
+        {loading && <LoaderSpiner />}
+        {!error && trandingList.length > 0 && (
+          <>
+            <h2>Trending today:</h2>
+            <TrendingMovies trandingList={trandingList} error={error} />
+          </>
+        )}
+        {error && <ErrorMassage />}
       </>
     );
   }

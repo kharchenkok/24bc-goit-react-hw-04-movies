@@ -1,17 +1,16 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import style from './Navigation.module.css'
+import React from "react";
+import { NavLink } from "react-router-dom";
+import style from "./Navigation.module.css";
 
 const Navigation = () => {
-    return (
-        <header className={style.border}>
-              <nav>
+  return (
+    <header className={style.border}>
+      <nav>
         <ul className={style.navList}>
           <li>
             <NavLink
               to={{
                 pathname: "/",
-               
               }}
               className={style.navListItem}
               activeClassName={style.navListItemActive}
@@ -24,7 +23,6 @@ const Navigation = () => {
             <NavLink
               to={{
                 pathname: "/movies",
-                
               }}
               className={style.navListItem}
               activeClassName={style.navListItemActive}
@@ -34,9 +32,8 @@ const Navigation = () => {
           </li>
         </ul>
       </nav>
-            
-        </header>
-    );
+    </header>
+  );
 };
 
 export default Navigation;
