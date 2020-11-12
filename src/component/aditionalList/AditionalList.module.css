@@ -1,0 +1,14 @@
+.additionalItem{
+    text-decoration: none;
+    margin-right: 15px;
+    color: black;
+    font-weight: bold;
+}
+
+.additionalItemActive {
+    color: red;
+  }
+  .additionalTitle{
+      font-weight: 500;
+      margin: 0;
+  }

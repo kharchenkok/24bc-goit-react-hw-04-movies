@@ -1,0 +1,35 @@
+.movieWrapper{
+    display: flex;
+    padding: 10px 40px;
+    border-bottom-width: 2px;
+    border-bottom-style: solid; 
+    border-bottom-color: rgb(92, 91, 91);
+}
+.movieDescription{
+    padding-left: 10px;
+}
+.movieList{
+    max-width: 550px;
+    list-style: none;
+    padding: 0;
+}
+.movieListItem{
+    display: flex;
+}
+.movieListItemTitle{
+    font-weight: bold;
+    margin-right: 5px;
+    color:rgb(39, 39, 94);
+    text-decoration: underline;
+}
+.movieListItemSpan{
+    margin-right: 5px;
+}
+.moviePosterImg{
+    max-width: 250px;
+    height: auto;
+}
+.movieTitle{
+    color:rgb(39, 39, 94);
+    text-decoration: underline;
+}

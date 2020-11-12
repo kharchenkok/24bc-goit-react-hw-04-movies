@@ -1,0 +1,22 @@
+.navList{
+    display: flex;
+    justify-content: flex-start;
+    list-style: none;
+    font-weight: 800;
+    font-size: 20px;
+}
+.navListItem{
+    text-decoration: none;
+    margin-right: 15px;
+    color: black;
+}
+
+.navListItemActive {
+    color: red;
+  }
+
+  .border{
+    border-bottom-width: 2px;
+    border-bottom-style: solid; 
+    border-bottom-color: rgb(92, 91, 91);
+  }
